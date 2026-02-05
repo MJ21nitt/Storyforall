@@ -4,20 +4,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Soul Manual: Interactive Book</title>
+    <title>College Guide for all</title>
     <style>
         :root {
-            --primary: #2c3e50;
-            --accent: #3498db;
-            --bg: #f4f7f6;
-            --white: #ffffff;
-            --text: #2d3436;
-            --logic-bg: #fffbf0;
-            --story-bg: #f8f9fa;
-        }
+    --primary: #10ac84;   /* Jungle Green (Headings/Nav) */
+    --accent: #feca57;    /* Bright Yellow-Orange (Buttons/Highlights) */
+    --bg: #f0fdf4;        /* Very light mint white */
+    --white: #ffffff;     /* Card Background */
+    --text: #1e272e;      /* Main Text */
+    --logic-bg: #fffcf0;  /* Pale Yellow for Logic */
+    --story-bg: #f1f8e9;  /* Pale Green for Stories */
+}
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             margin: 0;
             background-color: var(--bg);
             color: var(--text);
@@ -253,7 +253,7 @@
         
         .solution-list { padding-left: 20px; margin-top: 15px; }
         .solution-list li { margin-bottom: 12px; }
-        .takeaway { text-align: center; font-weight: 800; font-size: 1.3rem; margin-top: 50px; padding: 30px; border: 1px dashed #ccc; background: linear-gradient(to right, #fff, #f7f9fc, #fff); color: var(--primary); font-family: 'Georgia', serif; }
+        .takeaway { text-align: center; font-weight: 800; font-size: 1.3rem; margin-top: 50px; padding: 30px; border: 1px dashed #ccc; background: linear-gradient(to right, #fff, #f7f9fc, #fff); color: var(--primary); }
         .credits { text-align: center; font-size: 0.8rem; color: #aaa; margin-top: 60px; padding-top: 20px; border-top: 1px solid #eee; }
 
         @media (max-width: 900px) {
@@ -266,7 +266,7 @@
 <body>
 
     <div id="landingPage">
-        <h1>THE SOUL MANUAL</h1>
+        <h1>THE PATH MANUAL</h1>
         <p>A Student’s Guide to Identity, Ambition, and Strategy</p>
         <button class="enter-btn" onclick="enterBook()">Enter the World</button>
     </div>
@@ -276,7 +276,7 @@
         <nav class="navbar">
             <div style="display:flex; align-items:center;">
                 <button class="menu-toggle" onclick="toggleSidebar()">&#9776;</button>
-                <div class="book-title">THE SOUL MANUAL</div>
+                <div class="book-title">THE PATH MANUAL</div>
             </div>
             <div class="current-chapter-display">
                 Current: <span id="navTitle">Chapter 1</span>
