@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>College Guide for all</title>
+    <title>Pixels of Purpose</title>
     <style>
         :root {
     --primary: #10ac84;   /* Jungle Green (Headings/Nav) */
@@ -28,57 +28,57 @@
         }
 
         /* --- LANDING PAGE STYLES --- */
-        #landingPage {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #1e272e 0%, #2c3e50 100%);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 2000; /* On top of everything */
-            color: white;
-            transition: transform 0.8s ease-in-out, opacity 0.8s ease-in-out;
-        }
+       #landingPage {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    color: #2d3436; 
+    transition: transform 0.8s ease-in-out, opacity 0.8s ease-in-out;
+}
 
-        #landingPage h1 {
-            font-size: 4rem;
-            margin-bottom: 10px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            text-align: center;
-        }
+#landingPage h1 {
+    font-size: 4rem;
+    margin-bottom: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-align: center;
+    color: #1e3799; 
+}
 
-        #landingPage p {
-            font-size: 1.2rem;
-            color: #bdc3c7;
-            margin-bottom: 50px;
-            font-style: italic;
-        }
+#landingPage p {
+    font-size: 1.2rem;
+    color: #4b6584;
+    margin-bottom: 50px;
+    font-style: italic;
+}
 
-        .enter-btn {
-            padding: 15px 40px;
-            font-size: 1.2rem;
-            background: transparent;
-            color: var(--accent);
-            border: 2px solid var(--accent);
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-weight: bold;
-        }
+.enter-btn {
+    padding: 15px 40px;
+    font-size: 1.2rem;
+    background: transparent;
+    color: #20bf6b; 
+    border: 2px solid #20bf6b;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: bold;
+}
 
-        .enter-btn:hover {
-            background: var(--accent);
-            color: white;
-            box-shadow: 0 0 20px rgba(52, 152, 219, 0.6);
-        }
-
+.enter-btn:hover {
+    background: #20bf6b;
+    color: white;
+    box-shadow: 0 10px 20px rgba(32, 191, 107, 0.3);
+}
         /* --- MAIN APP STYLES --- */
         #mainApp {
             display: flex;
@@ -142,7 +142,7 @@
             border-right: 1px solid #333;
             position: absolute; /* Floating sidebar */
             height: 100%;
-            left: -260px; /* Hidden by default */
+            left: -300px; /* Hidden by default */
             transition: left 0.4s ease;
             z-index: 150;
             box-shadow: 5px 0 15px rgba(0,0,0,0.2);
@@ -236,7 +236,7 @@
         .nav-btn:hover { background: var(--accent); color: white; border-color: var(--accent); transform: translateY(-50%) scale(1.1); }
         .nav-btn:disabled { opacity: 0.3; cursor: not-allowed; background: #f1f2f6; color: #ccc; transform: none; }
         
-        .prev-btn { left: 20px; } 
+        .prev-btn { left: 30px; } 
         .next-btn { right: 30px; }
 
         /* Content Styling (Preserved) */
@@ -266,7 +266,7 @@
 <body>
 
     <div id="landingPage">
-        <h1>THE PATH MANUAL</h1>
+        <h1>Pixels of Purpose</h1>
         <p>A Student’s Guide to Identity, Ambition, and Strategy</p>
         <button class="enter-btn" onclick="enterBook()">Enter the World</button>
     </div>
@@ -276,7 +276,7 @@
         <nav class="navbar">
             <div style="display:flex; align-items:center;">
                 <button class="menu-toggle" onclick="toggleSidebar()">&#9776;</button>
-                <div class="book-title">THE PATH MANUAL</div>
+                <div class="book-title">Pixels of Purpose</div>
             </div>
             <div class="current-chapter-display">
                 Current: <span id="navTitle">Chapter 1</span>
