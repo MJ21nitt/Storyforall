@@ -261,6 +261,62 @@
             .chapter-card { padding: 30px; }
             #landingPage h1 { font-size: 2.5rem; }
         }
+        
+    #floating-audio-player {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 90%;
+        max-width: 400px;
+        background: rgba(44, 62, 80, 0.95); /* Dark Primary color */
+        backdrop-filter: blur(5px);
+        color: white;
+        padding: 12px 20px;
+        border-radius: 50px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        z-index: 1000;
+        border: 1px solid rgba(255,255,255,0.1);
+        font-family: 'Inter', sans-serif;
+    }
+
+    .player-info {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 0.85rem;
+    }
+
+    .playing-icon {
+        animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+        0% { opacity: 0.5; }
+        50% { opacity: 1; }
+        100% { opacity: 0.5; }
+    }
+
+    .control-btn {
+        background: #3498db; /* Your accent color */
+        border: none;
+        color: white;
+        padding: 6px 15px;
+        border-radius: 20px;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 0.8rem;
+        transition: 0.3s;
+    }
+
+    .control-btn:hover {
+        background: #2980b9;
+        transform: scale(1.05);
+    }
+
     </style>
 </head>
 <body>
@@ -300,6 +356,9 @@
             <main class="content-area">
                 
                 <article id="ch1" class="chapter-card active" data-title="The New Captain">
+                    <button class="chapter-play-btn" onclick="loadAndPlay('chapter1.mp3', 'Chapter 1: The New Captain')">
+    ▶ Listen to this Chapter
+</button>
                     <h2>Chapter 1: The New Captain</h2>
                     <div class="story-box">
                         <p>In school, you were a passenger on a long-distance bus. Your parents chose the route, your teachers watched the speed, and the guardrails of "rules" kept you from ever veering off the road. You didn't have to worry about where you were going; you just had to sit in your seat and perform.</p>
@@ -538,6 +597,33 @@
             currentChapter = index;
             updateUI();
         }
+
+    const audio = document.getElementById('main-audio');
+    const trackText = document.getElementById('track-name');
+    const playBtn = document.getElementById('play-pause-btn');
+
+    // This function handles the "Switching" between chapters
+    function loadAndPlay(fileName, displayName) {
+        audio.src = fileName;
+        trackText.innerText = displayName;
+        audio.play();
+        playBtn.innerText = "Pause";
+        playBtn.style.background = "#e74c3c";
+    }
+
+    function togglePlay() {
+        if (audio.src === "" || audio.src.endsWith('#')) return; // Safety check
+        if (audio.paused) {
+            audio.play();
+            playBtn.innerText = "Pause";
+            playBtn.style.background = "#e74c3c";
+        } else {
+            audio.pause();
+            playBtn.innerText = "Play";
+            playBtn.style.background = "#3498db";
+        }
+    }
+
     </script>
 </body>
 </html>
