@@ -348,6 +348,9 @@
                 <button class="toc-btn active" onclick="goToChapter(1)">1. The New Captain</button>
                 <button class="toc-btn" onclick="goToChapter(2)">2. The Mirror & Map</button>
                 <button class="toc-btn" onclick="goToChapter(3)">3. The Polymath Path</button>
+                <button class="toc-btn" onclick="goToChapter(4)">4. t</button>
+                <button class="toc-btn" onclick="goToChapter(5)">5. </button>
+                <button class="toc-btn" onclick="goToChapter(6)">6. </button>
             </aside>
 
             <button class="nav-btn prev-btn" id="prevBtn" onclick="changeChapter(-1)">&#8249;</button>
@@ -356,9 +359,7 @@
             <main class="content-area">
                 
                 <article id="ch1" class="chapter-card active" data-title="The New Captain">
-                    <button class="chapter-play-btn" onclick="loadAndPlay('chapter1.mp3', 'Chapter 1: The New Captain')">
-    ▶ Listen to this Chapter
-</button>
+
                     <h2>Chapter 1: The New Captain</h2>
                     <div class="story-box">
                         <p>In school, you were a passenger on a long-distance bus. Your parents chose the route, your teachers watched the speed, and the guardrails of "rules" kept you from ever veering off the road. You didn't have to worry about where you were going; you just had to sit in your seat and perform.</p>
@@ -527,6 +528,9 @@
     </div>
 
     <script>
+    const audio = document.getElementById('main-audio');
+    const trackText = document.getElementById('track-name');
+    const playBtn = document.getElementById('play-pause-btn');
         let currentChapter = 1;
         const totalChapters = 6;
         const sidebar = document.getElementById('sidebar');
@@ -583,6 +587,7 @@
             if(sidebar.classList.contains('open')) {
                 toggleSidebar();
             }
+            loadAndPlay(`ch${currentChapter}.mp4.m4a`, `Listening: Chapter ${currentChapter}`);
         }
 
         function changeChapter(direction) {
@@ -598,18 +603,26 @@
             updateUI();
         }
 
-    const audio = document.getElementById('main-audio');
-    const trackText = document.getElementById('track-name');
-    const playBtn = document.getElementById('play-pause-btn');
+   
 
     // This function handles the "Switching" between chapters
     function loadAndPlay(fileName, displayName) {
-        audio.src = fileName;
-        trackText.innerText = displayName;
-        audio.play();
-        playBtn.innerText = "Pause";
-        playBtn.style.background = "#e74c3c";
-    }
+    // 1. Update the source file name (now using .m4a)
+    audio.src = fileName; 
+    
+    // 2. Update the display text
+    trackText.innerText = displayName;
+    
+    // 3. Force the audio to load the new file format
+    audio.load(); 
+    
+    // 4. Start playing
+    audio.play();
+    
+    // 5. UI Update
+    playBtn.innerText = "Pause";
+    playBtn.style.background = "#e74c3c";
+}
 
     function togglePlay() {
         if (audio.src === "" || audio.src.endsWith('#')) return; // Safety check
@@ -625,5 +638,13 @@
     }
 
     </script>
+    <div id="floating-audio-player">
+    <div class="player-info">
+        <span class="playing-icon">🎵</span>
+        <span id="track-name">Select a Chapter to Listen</span>
+    </div>
+    <button id="play-pause-btn" class="control-btn" onclick="togglePlay()">Play</button>
+    <audio id="main-audio" style="display:none;"></audio>
+</div>
 </body>
 </html>
