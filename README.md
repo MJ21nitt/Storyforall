@@ -17,6 +17,7 @@ Collaboration: Written and structured by Jaisarves M with creative assistance fr
 Deployment: Hosted via GitHub Pages.
 
 🗺️ The Map (Chapters)
+
 The New Captain: Navigating freedom without guardrails.
 
 The Mirror & The Map: Moving beyond the "Comparison Trap."
