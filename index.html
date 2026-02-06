@@ -335,7 +335,7 @@
                 <div class="book-title">Pixels of Purpose</div>
             </div>
             <div class="current-chapter-display">
-                Current: <span id="navTitle">Chapter 1</span>
+                Current: <span id="navTitle">Chapter -1</span>
             </div>
         </nav>
 
@@ -345,22 +345,51 @@
 
             <aside class="sidebar" id="sidebar">
                 <h3>Table of Contents</h3>
-                <button class="toc-btn active" onclick="goToChapter(1)">1. The New Captain</button>
-                <button class="toc-btn" onclick="goToChapter(2)">2. The Mirror & Map</button>
-                <button class="toc-btn" onclick="goToChapter(3)">3. The Polymath Path</button>
-                <button class="toc-btn" onclick="goToChapter(4)">4. t</button>
-                <button class="toc-btn" onclick="goToChapter(5)">5. </button>
-                <button class="toc-btn" onclick="goToChapter(6)">6. </button>
+                <button class="toc-btn active" data-ch="-1" onclick="goToChapter(-1)">-1. The Prologue</button>
+                <button class="toc-btn" data-ch="0" onclick="goToChapter(0)">0. About the Author</button>
+                <button class="toc-btn" data-ch="1" onclick="goToChapter(1)">1. The New Captain</button>
+                <button class="toc-btn" data-ch="2" onclick="goToChapter(2)">2. The Mirror & Map</button>
+                <button class="toc-btn" data-ch="3" onclick="goToChapter(3)">3. The Polymath Path</button>
+                <button class="toc-btn" data-ch="4" onclick="goToChapter(4)">4. The Burnout Paradox</button>
+                <button class="toc-btn" data-ch="5" onclick="goToChapter(5)">5. The Art of the Smart Failure</button>
+                <button class="toc-btn" data-ch="6" onclick="goToChapter(6)">6. The Future Legacy</button>
             </aside>
 
             <button class="nav-btn prev-btn" id="prevBtn" onclick="changeChapter(-1)">&#8249;</button>
             <button class="nav-btn next-btn" id="nextBtn" onclick="changeChapter(1)">&#8250;</button>
 
             <main class="content-area">
+                 <article id="ch-1" class="chapter-card active" data-title="The Prologue">
+
+                    <h2>The Prologue: The Author’s Invitation</h2>
+                    <div class="story-box">
+                        <p>This manual is a collection of stories and observations I have gathered while navigating the fog of college life. It is a work in progress, much like I am. These pages do not contain specific names or personal histories; instead, they reflect a general philosophy—a way of seeing the world that has helped me find my footing.</p>
+                        <p>I must be clear: this is my perspective. It is based on my unique understanding and the experiences I have had so far. My intent is never to hurt or misrepresent; if anything in these pages feels out of place or causes discomfort, I offer my sincere apologies.</p>
+                        <p>However, I have one great request for you as you read: Do not stop here.
+After you finish these chapters, do not treat them as a fixed set of rules. Use them as a starting point to build your own stories, your own solutions, and your own path. My goal is to contribute a small spark to your journey, and I ask that you do the same for others.
+Grow yourself, but reach back to help your friends and those close to you grow as well. I believe that this—the act of growing together and helping others find their way—is the greatest thing we as humans can strive for.
+</p>
+                    </div>
+                    <div class="logic-box">
+                        <strong>Welcome to the Manual. Let’s start building.</strong>
+                    </div>
+                </article>
+
+                <article id="ch0" class="chapter-card" data-title="About the Author">
+
+                    <h2>About the Author</h2>
+                    <div class="story-box">
+                        <p>I am Jaisarves M, currently a third-year Chemical Engineering student at NIT Tiruchirappalli.</p>
+                        <p>I’ve spent much of my time in college navigating the same fog I describe in these chapters, balancing my core studies with a deep love for communication and the vibrant worlds of anime and manga. While I have written poetry in the past, Pixels of Purpose is my first attempt at long-form storytelling.</p>
+                        <p>I’ve always loved to talk and share ideas, and I used Gemini as a tool to help refine my voice so that these lessons could be understood by anyone walking a similar path. This manual is simply my first draft of making sense of life, one pixel at a time.</p>
+                    </div>
+                    
+                </article>
                 
-                <article id="ch1" class="chapter-card active" data-title="The New Captain">
+                <article id="ch1" class="chapter-card" data-title="The New Captain">
 
                     <h2>Chapter 1: The New Captain</h2>
+                    <h3>The Story: The Silence of the Guardrails</h3>
                     <div class="story-box">
                         <p>In school, you were a passenger on a long-distance bus. Your parents chose the route, your teachers watched the speed, and the guardrails of "rules" kept you from ever veering off the road. You didn't have to worry about where you were going; you just had to sit in your seat and perform.</p>
                         <p>Then, you arrived at college, and the bus drove away. Suddenly, the guardrails vanished. For the first time, no one was checking if you woke up on time, what you ate, or how you spent your afternoon. At first, this felt like total freedom, but soon it felt like being lost in a thick fog. You saw Seniors walking by with purpose, looking like they owned the ground they walked on. You wanted to reach out and ask, "How do I do this?" but your pride held you back. You felt like an empty vessel—someone with nothing to offer in exchange for their wisdom. To hide your confusion, you started following the crowd, wearing a mask that isn't yours, hoping that if you looked like everyone else, you would eventually find yourself.</p>
@@ -529,8 +558,9 @@
 
     <script>
     
-        let currentChapter = 1;
+        let currentChapter = -1;
         const totalChapters = 6;
+        const minChapter = -1; 
         let audio, trackText, playBtn, seekBar;
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -576,51 +606,48 @@ window.addEventListener('DOMContentLoaded', () => {
             overlay.classList.toggle('active');
         }
 
-        function updateUI() {
-            // 1. Hide all chapters
-            document.querySelectorAll('.chapter-card').forEach(card => card.classList.remove('active'));
-            document.querySelectorAll('.toc-btn').forEach(btn => btn.classList.remove('active'));
+       
 
-            // 2. Show current chapter
-            const activeCard = document.getElementById('ch' + currentChapter);
-            activeCard.classList.add('active');
-            
-            // 3. Update Navbar Title
-            const title = activeCard.getAttribute('data-title');
-            document.getElementById('navTitle').innerText = title;
+function updateUI() {
+    // 1. Hide all cards and remove active classes from buttons
+    document.querySelectorAll('.chapter-card').forEach(card => card.classList.remove('active'));
+    document.querySelectorAll('.toc-btn').forEach(btn => btn.classList.remove('active'));
 
-            // 4. Update Sidebar Active State
-            const sidebarBtns = document.querySelectorAll('.toc-btn');
-            if(sidebarBtns.length >= currentChapter) {
-                sidebarBtns[currentChapter - 1].classList.add('active');
-            }
+    // 2. Show current chapter (Works for ch-1, ch0, ch1...)
+    const activeCard = document.getElementById('ch' + currentChapter);
+    if (activeCard) {
+        activeCard.classList.add('active');
+        document.getElementById('navTitle').innerText = activeCard.getAttribute('data-title');
+    }
 
-            // 5. Update Buttons State
-            document.getElementById('prevBtn').disabled = (currentChapter === 1);
-            document.getElementById('nextBtn').disabled = (currentChapter === totalChapters);
+    // 3. Highlight the correct sidebar button using the data attribute
+    const activeBtn = document.querySelector(`.toc-btn[data-ch="${currentChapter}"]`);
+    if (activeBtn) activeBtn.classList.add('active');
 
-            // 6. Scroll content to top
-            document.querySelector('.content-area').scrollTop = 0;
-            
-            // 7. Close sidebar if open (for mobile UX)
-            if(sidebar.classList.contains('open')) {
-                toggleSidebar();
-            }
-            loadAndPlay("chapter" + currentChapter + ".mp3.m4a", "Listening: Chapter " + currentChapter);
-        }
+    // 4. Update Prev/Next button states
+    document.getElementById('prevBtn').disabled = (currentChapter <= minChapter);
+    document.getElementById('nextBtn').disabled = (currentChapter >= totalChapters);
 
-        function changeChapter(direction) {
-            const newIndex = currentChapter + direction;
-            if (newIndex >= 1 && newIndex <= totalChapters) {
-                currentChapter = newIndex;
-                updateUI();
-            }
-        }
+    // 5. Scroll to top
+    document.querySelector('.content-area').scrollTop = 0;
 
-        function goToChapter(index) {
-            currentChapter = index;
-            updateUI();
-        }
+    // 6. Audio logic (Keep your existing loadAndPlay call)
+    loadAndPlay(`chapter${currentChapter}.mp3.m4a`, `Listening: Chapter ${currentChapter}`);
+}
+
+function changeChapter(direction) {
+    const newIndex = currentChapter + direction;
+    if (newIndex >= minChapter && newIndex <= totalChapters) {
+        currentChapter = newIndex;
+        updateUI();
+    }
+}
+
+function goToChapter(index) {
+    currentChapter = index;
+    updateUI();
+    if(sidebar.classList.contains('open')) toggleSidebar();
+}
 
    
 
