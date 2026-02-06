@@ -528,11 +528,30 @@
     </div>
 
     <script>
-    const audio = document.getElementById('main-audio');
-    const trackText = document.getElementById('track-name');
-    const playBtn = document.getElementById('play-pause-btn');
+    
         let currentChapter = 1;
         const totalChapters = 6;
+        let audio, trackText, playBtn, seekBar;
+
+window.addEventListener('DOMContentLoaded', () => {
+    audio = document.getElementById('main-audio');
+    trackText = document.getElementById('track-name');
+    playBtn = document.getElementById('play-pause-btn');
+    seekBar = document.getElementById('seek-bar');
+
+    // Update seek bar as music plays
+    audio.addEventListener('timeupdate', () => {
+        if (audio.duration) {
+            seekBar.value = (audio.currentTime / audio.duration) * 100;
+        }
+    });
+
+    // Seek when user drags the bar
+    seekBar.addEventListener('input', () => {
+        const time = (seekBar.value / 100) * audio.duration;
+        audio.currentTime = time;
+    });
+});
         const sidebar = document.getElementById('sidebar');
         const overlay = document.querySelector('.sidebar-overlay');
 
@@ -587,7 +606,7 @@
             if(sidebar.classList.contains('open')) {
                 toggleSidebar();
             }
-            loadAndPlay(`ch${currentChapter}.mp3.m4a`, `Listening: Chapter ${currentChapter}`);
+            loadAndPlay("chapter" + currentChapter + ".mp3.m4a", "Listening: Chapter " + currentChapter);
         }
 
         function changeChapter(direction) {
@@ -606,44 +625,64 @@
    
 
     // This function handles the "Switching" between chapters
-    function loadAndPlay(fileName, displayName) {
-    // 1. Update the source file name (now using .m4a)
+   function loadAndPlay(fileName, displayName) {
     audio.src = fileName; 
-    
-    // 2. Update the display text
     trackText.innerText = displayName;
-    
-    // 3. Force the audio to load the new file format
     audio.load(); 
     
-    // 4. Start playing
-    audio.play();
-    
-    // 5. UI Update
-    playBtn.innerText = "Pause";
-    playBtn.style.background = "#e74c3c";
+    // Use a promise to catch the "Autoplay" error if the browser blocks it
+    let playPromise = audio.play();
+
+    if (playPromise !== undefined) {
+        playPromise.then(_ => {
+            playBtn.innerText = "Pause";
+            playBtn.style.background = "#e74c3c";
+        }).catch(error => {
+            // Auto-play was prevented, just show "Play" button
+            playBtn.innerText = "Play";
+            playBtn.style.background = "#3498db";
+        });
+    }
 }
 
     function togglePlay() {
-        if (audio.src === "" || audio.src.endsWith('#')) return; // Safety check
-        if (audio.paused) {
-            audio.play();
-            playBtn.innerText = "Pause";
-            playBtn.style.background = "#e74c3c";
-        } else {
-            audio.pause();
-            playBtn.innerText = "Play";
-            playBtn.style.background = "#3498db";
-        }
+    // If no file is loaded yet, load the current chapter
+    if (!audio.src || audio.src.endsWith('#') || audio.src === "") {
+        loadAndPlay(`chapter${currentChapter}.mp3.m4a`, `Listening: Chapter ${currentChapter}`);
+        return;
     }
+
+    if (audio.paused) {
+        audio.play();
+        playBtn.innerText = "Pause";
+        playBtn.style.background = "#e74c3c";
+    } else {
+        audio.pause();
+        playBtn.innerText = "Play";
+        playBtn.style.background = "#3498db";
+    }
+}
+        function stopAudio() {
+    audio.pause();
+    audio.currentTime = 0; // Reset to beginning
+    playBtn.innerText = "Play";
+    playBtn.style.background = "#3498db";
+    seekBar.value = 0;
+}
 
     </script>
     <div id="floating-audio-player">
     <div class="player-info">
         <span class="playing-icon">🎵</span>
-        <span id="track-name">Select a Chapter to Listen</span>
+        <div style="display: flex; flex-direction: column; gap: 4px;">
+            <span id="track-name" style="font-size: 0.75rem; font-weight: bold;">Select a Chapter</span>
+            <input type="range" id="seek-bar" value="0" step="1" style="width: 150px; height: 4px; cursor: pointer;">
+        </div>
     </div>
-    <button id="play-pause-btn" class="control-btn" onclick="togglePlay()">Play</button>
+    <div style="display: flex; gap: 8px;">
+        <button id="play-pause-btn" class="control-btn" onclick="togglePlay()">Play</button>
+        <button id="stop-btn" class="control-btn" style="background: #95a5a6;" onclick="stopAudio()">Stop</button>
+    </div>
     <audio id="main-audio" style="display:none;"></audio>
 </div>
 </body>
