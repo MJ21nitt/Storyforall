@@ -132,21 +132,40 @@
         }
 
         /* Sidebar (Collapsible) */
-        .sidebar {
-            width: 260px;
-            background: #222f3e;
-            color: white;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            border-right: 1px solid #333;
-            position: absolute; /* Floating sidebar */
-            height: 100%;
-            left: -300px; /* Hidden by default */
-            transition: left 0.4s ease;
-            z-index: 150;
-            box-shadow: 5px 0 15px rgba(0,0,0,0.2);
-        }
+        /* --- UPDATED SIDEBAR STYLES --- */
+.sidebar {
+    width: 260px;
+    background: #222f3e;
+    color: white;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid #333;
+    position: absolute; 
+    height: 100%;
+    left: -300px; 
+    transition: left 0.4s ease;
+    z-index: 150;
+    box-shadow: 5px 0 15px rgba(0,0,0,0.2);
+    
+    /* ADD THESE TWO LINES */
+    box-sizing: border-box; 
+    overflow-y: auto; 
+}
+
+/* Optional: Custom Scrollbar for a cleaner look in the sidebar */
+.sidebar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background: var(--accent);
+    border-radius: 10px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+    background: #2d3436;
+}
 
         .sidebar.open { left: 0; } /* Class to show sidebar */
 
